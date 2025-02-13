@@ -5,38 +5,33 @@ import java.time.Instant;
 import com.example.FashionFleet.util.SecurityUtil;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "users")
+@Table(name = "product_inventories")
 @Getter
 @Setter
-public class User {
+public class ProductInventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String name;
-    private String email;
-    private String password;
-    private String address;
-    private String phoneNumber;
-    private int age;
+    private Long quantity;
 
     private Instant createdAt;
+
     private Instant updatedAt;
+
     private String createdBy;
+
     private String updatedBy;
-    @Column(columnDefinition = "MEDIUMTEXT")
-    private String refreshToken;
 
     @PrePersist
     public void handleBeforeCreate() {
