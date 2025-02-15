@@ -24,16 +24,14 @@ public class ProductCategoryService {
         return this.productCategoryRepository.save(productCategory);
     }
 
-    public ProductCategory fetchCategoryById(long id) {
-        Optional<ProductCategory> op = this.productCategoryRepository.findById(id);
-        if (op.isPresent()) {
-            return op.get();
-        }
-        return null;
+    public Optional<ProductCategory> fetchCategoryById(long id) {
+        return this.productCategoryRepository.findById(id);
     }
 
     public ProductCategory handleUpdateProductCategory(ProductCategory productCategory) {
-        ProductCategory productCategoryDB = this.fetchCategoryById(productCategory.getId());
+        ProductCategory productCategoryDB = this.fetchCategoryById(productCategory.getId()).isPresent()
+                ? this.fetchCategoryById(productCategory.getId()).get()
+                : null;
         if (productCategoryDB != null) {
             productCategoryDB.setName(productCategory.getName());
             productCategoryDB.setDescription(productCategory.getDescription());

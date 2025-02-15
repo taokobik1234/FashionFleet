@@ -10,6 +10,7 @@ import com.example.FashionFleet.util.error.IdInvalidException;
 import jakarta.validation.Valid;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,8 +45,8 @@ public class ProductCategoryController {
     @ApiMessage("update categories")
     public ResponseEntity<ProductCategory> updateProductCategory(@Valid @RequestBody ProductCategory category)
             throws IdInvalidException {
-        ProductCategory isCategoryExist = this.productCategoryService.fetchCategoryById(category.getId());
-        if (isCategoryExist == null) {
+        Optional<ProductCategory> isCategoryExist = this.productCategoryService.fetchCategoryById(category.getId());
+        if (!isCategoryExist.isPresent()) {
             throw new IdInvalidException("Category " + category.getName() + " does not exist");
         }
         ProductCategory newProductCategory = this.productCategoryService.handleUpdateProductCategory(category);
@@ -62,8 +63,8 @@ public class ProductCategoryController {
     @DeleteMapping("product-categories/{id}")
     @ApiMessage("delete cate by id")
     public ResponseEntity<Void> deleteCategory(@PathVariable("id") long id) throws IdInvalidException {
-        ProductCategory isCategoryExist = this.productCategoryService.fetchCategoryById(id);
-        if (isCategoryExist == null) {
+        Optional<ProductCategory> isCategoryExist = this.productCategoryService.fetchCategoryById(id);
+        if (!isCategoryExist.isPresent()) {
             throw new IdInvalidException("Category " + id + " does not exist");
         }
         this.productCategoryService.handleDeleteCategory(id);

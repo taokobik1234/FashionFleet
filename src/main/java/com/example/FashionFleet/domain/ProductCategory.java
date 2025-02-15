@@ -11,11 +11,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.util.List;
 
 import com.example.FashionFleet.util.SecurityUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 
 @Entity
 @Table(name = "product_categories")
@@ -29,6 +32,10 @@ public class ProductCategory {
     private String name;
     @Column(columnDefinition = "MEDIUMTEXT")
     private String description;
+
+    @OneToMany(mappedBy = "product_category", fetch = FetchType.LAZY)
+    @JsonIgnore
+    List<Product> products;
 
     private Instant createdAt;
 

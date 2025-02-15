@@ -1,5 +1,6 @@
 package com.example.FashionFleet.domain;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 import com.example.FashionFleet.util.SecurityUtil;
@@ -8,6 +9,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Entity;
@@ -16,14 +19,23 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "product_inventories")
+@Table(name = "products")
 @Getter
 @Setter
-public class ProductInventory {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long quantity;
+
+    private String name;
+    @Column(columnDefinition = "MEDIUMTEXT")
+    private String description;
+    @Column(precision = 19, scale = 2)
+    private BigDecimal price;
+
+    @ManyToOne
+    @JoinColumn(name = "product_category_id")
+    private ProductCategory product_category;
 
     private Instant createdAt;
 
