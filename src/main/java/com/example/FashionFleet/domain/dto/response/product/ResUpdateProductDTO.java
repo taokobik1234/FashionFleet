@@ -12,6 +12,8 @@ public class ResUpdateProductDTO {
     private Long id;
     private String name;
     private String description;
+    private String brand;
+    private int inventory;
     private BigDecimal price;
     private Instant updatedAt;
     private ProductCategory product_category;

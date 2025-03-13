@@ -2,19 +2,11 @@ package com.example.FashionFleet.domain;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.List;
 
 import com.example.FashionFleet.util.SecurityUtil;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,6 +20,8 @@ public class Product {
     private Long id;
 
     private String name;
+    private String brand;
+    private int inventory;
     @Column(columnDefinition = "MEDIUMTEXT")
     private String description;
     @Column(precision = 19, scale = 2)
@@ -36,6 +30,9 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "product_category_id")
     private ProductCategory product_category;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Image> images;
 
     private Instant createdAt;
 

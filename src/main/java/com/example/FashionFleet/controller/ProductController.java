@@ -1,5 +1,6 @@
 package com.example.FashionFleet.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
@@ -72,6 +73,26 @@ public class ProductController {
         return ResponseEntity.ok().body(fetchProduct);
     }
 
+    @GetMapping("/products/name/{name}")
+    @ApiMessage("Fetch product by name")
+    public ResponseEntity<List<Product>> getProductByName(@PathVariable("name") String name) throws IdInvalidException {
+        List<Product> fetchProduct = this.productService.fetchProductByName(name);
+        if (fetchProduct == null) {
+            throw new IdInvalidException("Product " + name + " does not exists");
+        }
+        return ResponseEntity.ok().body(fetchProduct);
+    }
+
+    @GetMapping("/products/brand/{brand}")
+    @ApiMessage("Fetch product by brand")
+    public ResponseEntity<List<Product>> getProductByBrand(@PathVariable("brand") String brand) throws IdInvalidException {
+        List<Product> fetchProduct = this.productService.fetchProductByBrand(brand);
+        if (fetchProduct == null) {
+            throw new IdInvalidException("Product brand " + brand + " does not exists");
+        }
+        return ResponseEntity.ok().body(fetchProduct);
+    }
+
     @GetMapping("/products")
     @ApiMessage("Fetch all products")
     public ResponseEntity<ResultPaginationDTO> getAllProducts(@Filter Specification<Product> spec, Pageable pageable) {
@@ -79,7 +100,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/products/{id}")
-    @ApiMessage("Delete a user")
+    @ApiMessage("Delete a product")
     public ResponseEntity<Void> deleteProduct(@PathVariable("id") long id) throws IdInvalidException {
         Product product = this.productService.fetchProductById(id);
         if (product == null) {

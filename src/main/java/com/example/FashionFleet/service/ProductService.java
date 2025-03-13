@@ -35,6 +35,14 @@ public class ProductService {
         return null;
     }
 
+    public List<Product> fetchProductByName(String name){
+        return productRepository.findByName(name);
+    }
+
+    public List<Product> fetchProductByBrand(String brand){
+        return productRepository.findByBrand(brand);
+    }
+
     public Product handleCreateProduct(Product product) {
         if (product.getProduct_category() != null) {
             Optional<ProductCategory> categoryOptional = this.productCategoryService
@@ -53,6 +61,8 @@ public class ProductService {
         res.setName(product.getName());
         res.setPrice(product.getPrice());
         res.setCreatedAt(product.getCreatedAt());
+        res.setBrand(product.getBrand());
+        res.setInventory(product.getInventory());
         if (product.getProduct_category() != null) {
             cate.setId(product.getProduct_category().getId());
             cate.setName(product.getProduct_category().getName());
@@ -67,6 +77,8 @@ public class ProductService {
             productDB.setDescription(product.getDescription());
             productDB.setName(product.getName());
             productDB.setPrice(product.getPrice());
+            productDB.setBrand(product.getBrand());
+            productDB.setInventory(product.getInventory());
             if (product.getProduct_category() != null) {
                 Optional<ProductCategory> cateOptional = this.productCategoryService
                         .fetchCategoryById(product.getProduct_category().getId());
@@ -85,6 +97,8 @@ public class ProductService {
         res.setDescription(product.getDescription());
         res.setName(product.getName());
         res.setPrice(product.getPrice());
+        res.setBrand(product.getBrand());
+        res.setInventory(product.getInventory());
         res.setUpdatedAt(product.getUpdatedAt());
         if (product.getProduct_category() != null) {
             cate.setId(product.getProduct_category().getId());
