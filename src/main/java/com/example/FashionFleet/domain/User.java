@@ -45,6 +45,9 @@ public class User {
     @Column(columnDefinition = "MEDIUMTEXT")
     private String refreshToken;
 
+    @OneToOne(mappedBy = "user")
+    private ForgotPassword forgotPassword;
+
     @PrePersist
     public void handleBeforeCreate() {
         this.createdBy = SecurityUtil.getCurrentUserLogin().isPresent() == true

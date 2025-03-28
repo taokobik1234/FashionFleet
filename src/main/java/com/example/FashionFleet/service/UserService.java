@@ -46,6 +46,9 @@ public class UserService {
         return null;
     }
 
+    public User getUserByRefreshTokenAndEmail(String token, String email) {
+        return this.userRepository.findByRefreshTokenAndEmail(token, email);
+    }
     public ResCreateUserDTO convertToResCreateUserDTO(User user) {
         ResCreateUserDTO res = new ResCreateUserDTO();
         res.setId(user.getId());
@@ -68,6 +71,10 @@ public class UserService {
             userDb = this.userRepository.save(userDb);
         }
         return userDb;
+    }
+
+    public void handleUpdatePassword(String email, String password){
+        userRepository.updatePassword(email,password);
     }
 
     public ResUpdateUserDTO convertToResUpdateUserDTO(User user) {

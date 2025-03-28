@@ -5,6 +5,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -112,7 +113,11 @@ public class SecurityUtil {
                     throw e;
                 }
     }
-    
+
+    public Integer otpGenerator(){
+        Random random = new Random();
+        return random.nextInt(100_000,999_999);
+    }
     /**
      * Get the login of the current user.
      *
